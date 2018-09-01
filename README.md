@@ -1,2 +1,2 @@
-# react-number-input
-Input component for number
+# react-digit-input
+Input component for digit

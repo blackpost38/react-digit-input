@@ -1,16 +1,16 @@
 {
-  "name": "react-numeral-input",
+  "name": "react-digit-input",
   "version": "0.1.0",
   "main": "dist/index.js",
   "author": "blackpost38 <blackpost38@gmail.com>",
-  "description": "input component for number",
+  "description": "input component for digit",
   "repository": {
     "type": "git",
-    "url": "https://github.com/blackpost38/react-number-input.git"
+    "url": "https://github.com/blackpost38/react-digit-input.git"
   },
   "bugs": {
     "mail": "blackpost38@gmail.com",
-    "url": "https://github.com/blackpost38/react-number-input/issues"
+    "url": "https://github.com/blackpost38/react-digit-input/issues"
   },
   "license": "MIT",
   "scripts": {
