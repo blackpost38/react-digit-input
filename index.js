@@ -6,11 +6,24 @@ class DigitInput extends Component {
     super(props);
 
     this.state = {
+      initialValue: `${props.value}`,
       value: `${props.value}`,
     };
 
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    const stringValue = `${props.value}`;
+    if (state.initialValue !== stringValue) {
+      return {
+        initialValue: stringValue,
+        value: stringValue,
+      };
+    }
+
+    return null;
   }
 
   handleKeyPress(event) {
@@ -40,7 +53,7 @@ class DigitInput extends Component {
 }
 
 DigitInput.propTypes = {
-  value: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 DigitInput.defaultProps = {
