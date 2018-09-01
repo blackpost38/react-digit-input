@@ -1,62 +1,50 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import numeral from 'numeral';
 
-class NumberInput extends React.Component {
+class DigitInput extends Component {
   constructor(props) {
     super(props);
 
-    const displayValue = this.getDisplayValue();
-    this.state = { value: displayValue };
+    this.state = {
+      value: `${props.value}`,
+    };
 
-    this.onBlur = this.onBlur.bind(this);
-    this.onChange = this.onChange.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  onBlur(event) {
-    const { onBlur } = this.props;
-    const displayValue = this.getDisplayValue(event.target.value);
-    this.setState({ value: displayValue }, () => {
-      onBlur(displayValue);
-    });
+  handleKeyPress(event) {
+    const key = event.key;
+    if (key !== 'Backspace' && !(/[0-9]/.test(key)) ) {
+      event.preventDefault();
+      return;
+    }
   }
 
-  onChange(event) {
-    const { onChange } = this.props;
-    const { value } = event.target;
-    this.setState({ value }, () => {
-      onChange(value);
-    });
-  }
-
-  getDisplayValue(value = this.props.value) {
-    const { format } = this.props;
-    return numeral(value).format(format);
+  handleChange(event) {
+    const value = event.target.value;
+    this.setState({ value });
   }
 
   render() {
     return (
       <input
-        type="text"
+        type="number"
+        pattern="[0-9]*"
         value={this.state.value}
-        onBlur={this.onBlur}
-        onChange={this.onChange}
+        onKeyPress={this.handleKeyPress}
+        onChange={this.handleChange}
       />
     );
   }
 }
 
-NumberInput.propTypes = {
-  value: PropTypes.string.isRequired,
-  format: PropTypes.string,
-  onBlur: PropTypes.func,
-  onChange: PropTypes.func,
+DigitInput.propTypes = {
+  value: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
 };
 
-NumberInput.defaultProps = {
-  format: '0,0.0',
-  onBlur() {},
-  onChange() {},
+DigitInput.defaultProps = {
+  value: '',
 };
 
-export default NumberInput;
+export default DigitInput;
