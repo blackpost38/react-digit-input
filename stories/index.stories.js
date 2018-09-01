@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
-import { linkTo } from '@storybook/addon-links';
-
-import { Button, Welcome } from '@storybook/react/demo';
 import DigitInput from '../index';
 
 storiesOf('DigitInput', module)
@@ -12,6 +8,7 @@ storiesOf('DigitInput', module)
     <DigitInput />
   ))
   .add('with initial value', () => {
+    // eslint-disable-next-line react/no-multi-comp
     class Sample extends Component {
       constructor(props) {
         super(props);
@@ -20,7 +17,7 @@ storiesOf('DigitInput', module)
       }
 
       handleClick() {
-        this.setState({ value: this.state.value + 1});
+        this.setState({ value: this.state.value + 1 });
       }
 
       render() {
@@ -29,9 +26,35 @@ storiesOf('DigitInput', module)
             <DigitInput value={this.state.value} />
             <button onClick={this.handleClick}>increment</button>
           </div>
-        )
+        );
       }
     }
 
     return <Sample />;
   })
+  .add('with event', () => {
+    // eslint-disable-next-line react/no-multi-comp
+    class Sample extends Component {
+      constructor(props) {
+        super(props);
+        this.state = { value: 0 };
+        this.handleChange = this.handleChange.bind(this);
+      }
+
+      handleChange(e, { value }) {
+        this.setState({ value });
+      }
+
+      render() {
+        return (
+          <DigitInput
+            value={this.state.value}
+            onChange={this.handleChange}
+            onKeyPress={this.handleKeyPress}
+          />
+        );
+      }
+    }
+
+    return <Sample />;
+  });
